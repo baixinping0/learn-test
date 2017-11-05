@@ -1,0 +1,5 @@
+com/bxp/hadooptest/hdfs/HdfsTest.class
+com/bxp/hadooptest/mapreduce/WordCount.class
+com/bxp/hadooptest/mapreduce/WordCount$WordCountReduce.class
+com/bxp/hadooptest/mapreduce/WordCount$WordCountMapper.class
+com/bxp/hadooptest/mapreduce/MapReduceTest.class
