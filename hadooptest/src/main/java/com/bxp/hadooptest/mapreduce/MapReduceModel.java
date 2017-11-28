@@ -6,6 +6,8 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.DefaultCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -45,6 +47,11 @@ public class MapReduceModel extends Configured implements Tool{
 //        Configuration configuration = new Configuration();
         //读取配置文件信息
         Configuration conf = getConf();
+//        conf.set("mapreduce.map.output.compress", "true");//设置开启压缩，默认为false
+//        conf.set("mapreduce.map.output.compress.codec", "org.apache.hadoop.io.compress.Lz4Codec");//设置压缩算法,CompressionCodec为压缩算法的父类
+//        CompressionCodec
+
+//        conf.set("mapreduce.job.reduces", "2");  //设置reduce的个数
         //创建Job
         Job job = Job.getInstance(conf, this.getClass().getSimpleName());
         //设置运行的jar
@@ -60,13 +67,22 @@ public class MapReduceModel extends Configured implements Tool{
         //TODO    需要修改map的输出类型
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
+//*******************shuffle************************
 
+//        job.setPartitionerClass(cls);     //设置分区
+//        job.setSortComparatorClass(cls);    //设置排序
+//        job.setCombinerClass(cls);          //设置combiner
+//        job.setGroupingComparatorClass(cls);    //设置group
+
+//*******************shuffle************************
         //设置reduce
         //TODO    需要修改ModelReduce
         job.setReducerClass(ModelReduce.class);
         //TODO    需要修改reduce的输出类型
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
+//        job.setNumReduceTasks(2);   //设置reduce的个数
 
         //设置output
         Path outpath = new Path(arg0[1]);
